@@ -3,6 +3,11 @@ margin:0;
 padding:0;
 }
 
+.spacing {
+margin: 0 auto;
+width: 80%;
+}
+
 .hover_hand{
 cursor:pointer;
 }
@@ -65,11 +70,6 @@ float: left;
 
 .buttons img{
 width: 100px;
-}
-
-.spacing {
-margin: 0 auto;
-width: 80%;
 }
 
 .past {

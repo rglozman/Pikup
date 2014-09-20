@@ -1,3 +1,4 @@
+
 var locations = [
 [ "Tim Hortons","no","95 King Street South, Waterloo","<Polygon><outerBoundaryIs><LinearRing><coordinates>43.4630965,-80.52217417</coordinates></LinearRing></outerBoundaryIs></Polygon>","43.4630965,-80.52217417","http://maps.google.com/mapfiles/ms/icons/blue.png"],
 
@@ -5,8 +6,10 @@ var locations = [
 
 [ "Starbucks","no","109 King Street North, Waterloo","<Polygon><outerBoundaryIs><LinearRing><coordinates>43.469249,-80.527782416</coordinates></LinearRing></outerBoundaryIs></Polygon>","43.469249,-80.527782416","http://maps.google.com/mapfiles/ms/icons/blue.png"],
 
-[ "University of Waterloo","no","200 University Avenue Lex, Waterloo","<Polygon><outerBoundaryIs><LinearRing><coordinates>43.4610515,-80.5561899</coordinates></LinearRing></outerBoundaryIs></Polygon>","43.4610515,-80.5561899","http://maps.google.com/mapfiles/ms/icons/blue.png"]
+[ "University of Waterloo","no","200 University Avenue West, Waterloo","<Polygon><outerBoundaryIs><LinearRing><coordinates>43.472285,-80.544858</coordinates></LinearRing></outerBoundaryIs></Polygon>","43.472285,-80.544858","http://maps.google.com/mapfiles/ms/icons/blue.png"]
 ];
+
+alert(locations.length);
 
 var geocoder = null;
 var map = null;
@@ -57,6 +60,7 @@ function initialize() {
     (marker, i));     
   }
   map.fitBounds(bounds);   
+  
   init();
 }
 
@@ -82,7 +86,16 @@ function codeAddress() {
 
 
 function init() {
-  var address = "145 university avenue west, waterloo";
+  //var address = "145 university avenue west, waterloo";
+  if (document.getElementById('address').value == "") {
+	//var address = $(function(){return get_location()});
+	//console.log(address);
+	var address = $("#myLoc").val();
+	//navigator.geolocation.getCurrentPosition( function(x){address = x.coords; } ) ;
+	//console.log ( address);
+  } else {
+	var address = document.getElementById('address').value;
+  }
   geocoder.geocode( { 'address': address}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
       map.setCenter(results[0].geometry.location);
@@ -94,7 +107,6 @@ function init() {
       closest = findClosestN(results[0].geometry.location,10);
             // get driving distance
             closest = closest.splice(0,locations.length);
-            console.log( closest)
             calculateDistances(results[0].geometry.location, closest, locations.length);
           } else {
             alert('Geocode was not successful for the following reason: ' + status);
@@ -135,21 +147,21 @@ function findClosestN(pt,numberOfResults) {
       } else {
         var origins = response.originAddresses;
         var destinations = response.destinationAddresses;
-        var outputDiv = document.getElementById('info');
-        outputDiv.innerHTML = '';
+        var outputDiv = $(document).find(".pikup_info");
 
         var results = response.rows[0].elements;
         for (var i = 0; i < numberOfResults; i++) {
+		console.log(numberOfResults);
           closest[i].setMap(map);
-          outputDiv.innerHTML += "<a href='javascript:google.maps.event.trigger(closest["+i+"],\"click\");'>"+closest[i].title + '</a><br>' + closest[i].address+"<br>"
-          + results[i].distance.text + ' appoximately '
-          + results[i].duration.text + '<br><hr>';
+          $( $(outputDiv[i]).find("h5")[2]).text(  results[i].distance.text + ' appoximately '
+          + results[i].duration.text );
         }
       }
     });
 }
 
 function get_location(){
+
   if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       var pos = new google.maps.LatLng(position.coords.latitude,
