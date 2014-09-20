@@ -2,7 +2,10 @@ var map;
 var markers = [];
 
 function initialize() {
-  var haightAshbury = new google.maps.LatLng(37.7699298, -122.4469157);
+  var haightAshbury = [
+  new google.maps.LatLng(43.4630965,-80.52217417), 
+  ];
+
   var mapOptions = {
     zoom: 12,
     center: haightAshbury,
@@ -15,10 +18,18 @@ function initialize() {
 }
 
 function addMarker(location) {
+  for (var i = 0; i <location.length: i++){
+    var marker = new google.maps.Marker({
+      position: location[i],
+      map: map
+    });
+  }
+
   var marker = new google.maps.Marker({
     position: location,
     map: map
   });
+
   markers.push(marker);
 }
 
