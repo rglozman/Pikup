@@ -1,5 +1,26 @@
-html, body, #map-canvas { 
-	height: 80%; 
+html {
+margin:0;
+padding:0;
+}
+
+.pikup_item {
+height:200px;
+width:100%;
+}
+
+.pikup_item .pikup_logo {
+height:100%;
+border-radius: 100px;
+float:left;
+}
+
+.spacing {
+margin: 0 auto;
+width: 80%;
+}
+
+#map-canvas { 
+	height: 180px; 
 	margin: 0; 
 	padding: 0; 
 	width:100%;
