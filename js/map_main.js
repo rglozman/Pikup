@@ -25,7 +25,7 @@ function initialize() {
             scrollwheel: false,
             navigationControl: false,
             mapTypeControl: false,
-            scaleControl: false,
+            scaleControl: true,
             draggable: false
                     });   
 
@@ -84,7 +84,7 @@ init();
 	   function init() {
 	    //geocoder = new google.maps.Geocoder();
         //var address = document.getElementById('address').value;
-		var address = "200 university avenue west, waterloo";
+		var address = "145 university avenue west, waterloo";
         geocoder.geocode( { 'address': address}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
             map.setCenter(results[0].geometry.location);

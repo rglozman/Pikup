@@ -36,8 +36,8 @@
 	
 	<div class="pikup_wrapper spacing">
 		<h1> Pikups </h1>
-		<a href="javascript:google.maps.event.trigger(closest[0],'click');">
-			<div class ="pikup_item">
+		<div class ="pikup_item">
+			<a href="javascript:google.maps.event.trigger(closest[0],'click');">
 				<img class="pikup_logo" src="./img/starbucks_logo.png">
 				<div class="pikup_info">
 					<h3>Tim Hortons </h3>
@@ -45,14 +45,15 @@
 					<h5> September 21, 2014 </h5>
 					<h5> 95 King Street South </h5>
 				</div>
-				<div class="pikup_actions">
-					<img src="./img/check.png" class="hover_hand book_pikup">
-					<img src="./img/mail.png" class="hover_hand email_pikup">
-				</div>
+			</a>
+			<div class="pikup_actions">
+				<img src="./img/check.png" class="hover_hand book_pikup">
+				<img src="./img/mail.png" class="hover_hand email_pikup">
 			</div>
-		</a>
-		<a href="javascript:google.maps.event.trigger(closest[1],'click');">
+		</div>
+		
 			<div class ="pikup_item">
+			<a href="javascript:google.maps.event.trigger(closest[1],'click');">
 				<img class="pikup_logo" src="./img/starbucks_logo.png">
 				<div class="pikup_info">
 					<h3> Starbucks </h3>
@@ -60,14 +61,16 @@
 					<h5> September 21, 2014 </h5>
 					<h5> 151 Columbia Streett </h5>
 				</div>
+			</a>
 				<div class="pikup_actions">
 					<img src="./img/check.png" class="hover_hand book_pikup">
 					<img src="./img/mail.png" class="hover_hand email_pikup">
 				</div>
 			</div>
 		</a>
-		<a href="javascript:google.maps.event.trigger(closest[2],'click');">
+		
 			<div class ="pikup_item">
+				<a href="javascript:google.maps.event.trigger(closest[2],'click');">
 				<img class="pikup_logo" src="./img/starbucks_logo.png">
 				<div class="pikup_info">
 					<h3>Tim Hortons - University of Waterloo </h3>
@@ -75,21 +78,24 @@
 					<h5> September 21, 2014 </h5>
 					<h5> 200 University Avenue West </h5>
 				</div>
+				</a>
 				<div class="pikup_actions">
 					<img src="./img/check.png" class="hover_hand book_pikup">
 					<img src="./img/mail.png" class="hover_hand email_pikup">
 				</div>
 			</div>
 		</a>
-		<a href="javascript:google.maps.event.trigger(closest[3],'click');">
+		
 			<div class ="pikup_item">
+			<a href="javascript:google.maps.event.trigger(closest[3],'click');">
 				<img class="pikup_logo" src="./img/starbucks_logo.png">
 				<div class="pikup_info">
 					<h3>Tim Hortons </h3>
 					<h4> TWO CAR FULLS OF PRODUCTS </h4>
 					<h5> September 21, 2014 </h5>
-					<h5> 145 University Avenue West </h5>
+					<h5> 200 University Avenue West </h5>
 				</div>
+			</a>
 				<div class="pikup_actions">
 					<img src="./img/check.png" class="hover_hand book_pikup">
 					<img src="./img/mail.png" class="hover_hand email_pikup">
@@ -169,7 +175,7 @@ document.getElementById("map-canvas").style.position = "fixed";
 
 $(".pikup_actions").on("click", ".email_pikup", function() {
 	//console.log( $('.pikup_actions').parent().find('input').length );
-	if ($('.pikup_actions').parent().find('textarea').length == 0) {
+	if ($(this).parent().parent().find('textarea').length == 0) {
 		$(this).parent().parent().append('<textarea placeholder="Type your message here...."></textarea>');
 	} else {
 		$(this).parent().parent().find('textarea').toggle();
