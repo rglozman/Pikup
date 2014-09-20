@@ -22,19 +22,42 @@
 
 	<div id="map-canvas"></div>
 	<form role="form">
+		 <div class="form-group">
+    <label for="place">Title:</label>
+    <input class="form-control" id="place" placeholder="Title: ">
+
+  </div>
   <div class="form-group">
     <label for="address">Address:</label>
     <input class="form-control" id="address" placeholder="Enter Address: ">
   </div>
-    <button type="submit" id="target" class="btn btn-default">Submit</button>
 
-    <script type="text/javascript">
-    $( "#target" ).submit(function( event ) {
-  alert( "Handler for .submit() called." );
-  event.preventDefault();
-});
+<button class="button" id="submitAddress">Submit</button>
 
-    </script>
+
+	<script type="text/javascript">
+
+
+
+  $(function() {
+  	$("#submitAddress").click(function(event) {
+  		event.preventDefault();
+  		var address = $('#address').val();
+
+		var geocoder= new google.maps.Geocoder();
+
+		geocoder.geocode( { 'address': address}, function(results, status) {
+		if (status == google.maps.GeocoderStatus.OK) {
+   			 var lat = results[0].geometry.location.k;
+    		 var lon = results[0].geometry.location.B;
+    		 var place = document.getElementById("place").value;
+   			 loc_plot(place, lat, lon);
+   			 } 
+		}); 
+  	})
+  })
+ 
+</script>
 
 </form>
 	<div id="pikup_wrapper" class="spacing">

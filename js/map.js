@@ -5,11 +5,10 @@ var LocationData = [
     [43.4610515,-80.5561899, "200 University Avenue Lex, Waterloo", "4" ] 
 ];
 
-
+var map = null;
 
 function initialize()
 {
-
     var mapOptions = {
     disableDefaultUI: true,
     scrollwheel: false,
@@ -20,8 +19,7 @@ function initialize()
     mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 
-    var map = 
-        new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
     var bounds = new google.maps.LatLngBounds();
     var infowindow = new google.maps.InfoWindow();
 
@@ -45,10 +43,16 @@ function initialize()
     }
      
     map.fitBounds(bounds);
-
-
 }
 
+function loc_plot(place, lat, lon){
+      var markers = new google.maps.Marker({
+      position: new google.maps.LatLng(lat, lon),
+      map: map,
+      title: place,
+      icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
+  });
+}
 
 
 google.maps.event.addDomListener(window, 'load', initialize);
