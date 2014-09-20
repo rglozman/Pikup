@@ -4,7 +4,9 @@ var LocationData = [
     [43.469249,-80.527782416, "109 King Street North, Waterloo", "3" ], 
     [43.4610515,-80.5561899, "200 University Avenue Lex, Waterloo", "4" ] 
 ];
- 
+
+
+
 function initialize()
 {
 
