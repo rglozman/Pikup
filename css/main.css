@@ -3,7 +3,6 @@ margin:0;
 padding:0;
 }
 
-<<<<<<< HEAD
 .pikup_wrapper h1 {
 margin-bottom: 10px;
 font-size: 20px;
@@ -24,20 +23,10 @@ width:70%;
 .pikup_item .pikup_logo {
 max-width:200px;
 width:20%;
-=======
-.pikup_item {
-height:200px;
-width:100%;
-}
-
-.pikup_item .pikup_logo {
-height:100%;
->>>>>>> origin/master
 border-radius: 100px;
 float:left;
 }
 
-<<<<<<< HEAD
 .pikup_actions {
 float:right;
 max-width: 64px;
@@ -50,8 +39,6 @@ width:100%;
 vertical-align: 0;
 }
 
-=======
->>>>>>> origin/master
 .spacing {
 margin: 0 auto;
 width: 80%;
