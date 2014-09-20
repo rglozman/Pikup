@@ -3,12 +3,15 @@ var markers = [];
 
 function initialize() {
   var haightAshbury = [
-  new google.maps.LatLng(43.4630965,-80.52217417), 
+  new google.maps.LatLng(43.4630965,-80.52217417),
+  new google.maps.LatLng(43.4770042,-80.544263216),
+  new google.maps.LatLng(43.469249,-80.527782416),
+  new google.maps.LatLng(43.4610515,-80.5561899),
   ];
 
   var mapOptions = {
     zoom: 12,
-    center: haightAshbury,
+    center: new google.maps.LatLng(43.4630965,-80.52217417),
     mapTypeId: google.maps.MapTypeId.TERRAIN
   };
   map = new google.maps.Map(document.getElementById('map-canvas'),
@@ -18,19 +21,13 @@ function initialize() {
 }
 
 function addMarker(location) {
-  for (var i = 0; i <location.length: i++){
+  for (var i = 0; i <location.length; i++){
     var marker = new google.maps.Marker({
       position: location[i],
       map: map
     });
+    markers.push(marker);
   }
-
-  var marker = new google.maps.Marker({
-    position: location,
-    map: map
-  });
-
-  markers.push(marker);
 }
 
 // Sets the map on all markers in the array.
