@@ -80,9 +80,11 @@ background-color:#FEE0C6;
 background-color: #ECF1EF;
 }
 
-#map-canvas { 
-	height: 180px; 
-	margin: 0; 
-	padding: 0; 
-	width:100%;
+#map { 
+height: 300px;
+width: 100%;
+position: fixed;
+overflow: hidden;
+-webkit-transform: translateZ(0px);
+background-color: rgb(229, 227, 223);
 }

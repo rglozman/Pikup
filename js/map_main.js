@@ -135,7 +135,7 @@ function findClosestN(pt,numberOfResults) {
       } else {
         var origins = response.originAddresses;
         var destinations = response.destinationAddresses;
-        var outputDiv = document.getElementById('side_bar');
+        var outputDiv = document.getElementById('info');
         outputDiv.innerHTML = '';
 
         var results = response.rows[0].elements;
