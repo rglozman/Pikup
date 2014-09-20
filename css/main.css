@@ -3,9 +3,13 @@ margin:0;
 padding:0;
 }
 
+.hover_hand{
+cursor:pointer;
+}
+
 .pikup_wrapper h1 {
 margin-bottom: 10px;
-font-size: 20px;
+font-size: 40px;
 }
 
 .pikup_item {
@@ -17,7 +21,8 @@ margin-bottom:5%;
 
 .pikup_info {
 display:inline-block;
-width:70%;
+width:60%;
+margin-left:5%;
 }
 
 .pikup_item .pikup_logo {
