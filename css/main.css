@@ -39,6 +39,22 @@ width:100%;
 vertical-align: 0;
 }
 
+.pikup_add {
+height:300px;
+width:70%;
+margin:auto;
+padding: auto;
+}
+
+.buttons {
+float: left;
+
+}
+
+.buttons img{
+width: 100px;
+}
+
 .spacing {
 margin: 0 auto;
 width: 80%;
