@@ -16,7 +16,7 @@ font-size: 40px;
 display:table;
 
 width:100%;
-margin-bottom:5%;
+margin-bottom:10px;
 }
 
 .pikup_info {
@@ -51,6 +51,13 @@ margin:auto;
 padding: auto;
 }
 
+.pikup_item textarea{
+display:block;
+clear:both;
+width: 60%;
+margin: 0 auto;
+}
+
 .buttons {
 float: left;
 
@@ -63,6 +70,14 @@ width: 100px;
 .spacing {
 margin: 0 auto;
 width: 80%;
+}
+
+.past {
+background-color:#FEE0C6;
+}
+
+.future {
+background-color: #ECF1EF;
 }
 
 #map-canvas { 

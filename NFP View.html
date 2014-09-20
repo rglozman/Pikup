@@ -14,105 +14,132 @@
 		<!--JavaScript-->
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVcoQ7KffZBwfEdDfUCn_PmXkPGgF-Q4Y"></script>
-	<script src="js/map.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=false"></script>
+	<script src="js/map_main.js"></script>
+
 
 </head>
 
 <body>
 
-	<div id="map-canvas"></div>
+	<table border="1"><tr><td>
+     <div id="map" style="height: 600px; width:800px;"></div>
+</td><td>
+     <div id="side_bar"></div>
+</td></tr></table>
+<input id="address" type="text" value="Palo Alto, CA"></input>
+<input type="button" value="Search" onclick="codeAddress();"></input>
+<div id="info"></div>
+	
+	
+	
+	
 	<div class="pikup_wrapper spacing">
 		<h1> Pikups </h1>
-		<div class ="pikup_item">
-			<img class="pikup_logo" src="./img/starbucks_logo.png">
-			<div class="pikup_info">
-				<h4> TWO CAR FULLS OF PRODUCTS </h4>
-				<h5> September 21, 2014 </h5>
-				<h5> 145 University Avenue West </h5>
+		<a href="javascript:google.maps.event.trigger(closest[0],'click');">
+			<div class ="pikup_item">
+				<img class="pikup_logo" src="./img/starbucks_logo.png">
+				<div class="pikup_info">
+					<h3>Tim Hortons </h3>
+					<h4> TWO CAR FULLS OF PRODUCTS </h4>
+					<h5> September 21, 2014 </h5>
+					<h5> 95 King Street South </h5>
+				</div>
+				<div class="pikup_actions">
+					<img src="./img/check.png" class="hover_hand book_pikup">
+					<img src="./img/mail.png" class="hover_hand email_pikup">
+				</div>
 			</div>
-			<div class="pikup_actions">
-				<img src="./img/check.png" >
-				<img src="./img/mail.png" >
+		</a>
+		<a href="javascript:google.maps.event.trigger(closest[1],'click');">
+			<div class ="pikup_item">
+				<img class="pikup_logo" src="./img/starbucks_logo.png">
+				<div class="pikup_info">
+					<h3> Starbucks </h3>
+					<h4> TWO CAR FULLS OF PRODUCTS </h4>
+					<h5> September 21, 2014 </h5>
+					<h5> 151 Columbia Streett </h5>
+				</div>
+				<div class="pikup_actions">
+					<img src="./img/check.png" class="hover_hand book_pikup">
+					<img src="./img/mail.png" class="hover_hand email_pikup">
+				</div>
 			</div>
-		</div>
-		<div class ="pikup_item">
-			<img class="pikup_logo" src="./img/starbucks_logo.png">
-			<div class="pikup_info">
-				<h4> TWO CAR FULLS OF PRODUCTS </h4>
-				<h5> September 21, 2014 </h5>
-				<h5> 145 University Avenue West </h5>
+		</a>
+		<a href="javascript:google.maps.event.trigger(closest[2],'click');">
+			<div class ="pikup_item">
+				<img class="pikup_logo" src="./img/starbucks_logo.png">
+				<div class="pikup_info">
+					<h3>Tim Hortons - University of Waterloo </h3>
+					<h4> TWO CAR FULLS OF PRODUCTS </h4>
+					<h5> September 21, 2014 </h5>
+					<h5> 200 University Avenue West </h5>
+				</div>
+				<div class="pikup_actions">
+					<img src="./img/check.png" class="hover_hand book_pikup">
+					<img src="./img/mail.png" class="hover_hand email_pikup">
+				</div>
 			</div>
-			<div class="pikup_actions">
-				<img src="./img/check.png" >
-				<img src="./img/mail.png" >
+		</a>
+		<a href="javascript:google.maps.event.trigger(closest[3],'click');">
+			<div class ="pikup_item">
+				<img class="pikup_logo" src="./img/starbucks_logo.png">
+				<div class="pikup_info">
+					<h3>Tim Hortons </h3>
+					<h4> TWO CAR FULLS OF PRODUCTS </h4>
+					<h5> September 21, 2014 </h5>
+					<h5> 145 University Avenue West </h5>
+				</div>
+				<div class="pikup_actions">
+					<img src="./img/check.png" class="hover_hand book_pikup">
+					<img src="./img/mail.png" class="hover_hand email_pikup">
+				</div>
 			</div>
-		</div>
-		<div class ="pikup_item">
-			<img class="pikup_logo" src="./img/starbucks_logo.png">
-			<div class="pikup_info">
-				<h4> TWO CAR FULLS OF PRODUCTS </h4>
-				<h5> September 21, 2014 </h5>
-				<h5> 145 University Avenue West </h5>
-			</div>
-			<div class="pikup_actions">
-				<img src="./img/check.png" >
-				<img src="./img/mail.png" >
-			</div>
-		</div>
-		<div class ="pikup_item">
-			<img class="pikup_logo" src="./img/starbucks_logo.png">
-			<div class="pikup_info">
-				<h4> TWO CAR FULLS OF PRODUCTS </h4>
-				<h5> September 21, 2014 </h5>
-				<h5> 145 University Avenue West </h5>
-			</div>
-			<div class="pikup_actions">
-				<img src="./img/check.png" >
-				<img src="./img/mail.png" >
-			</div>
-		</div>
+		</a>
 	</div>
 	
 	<div class="pikup_wrapper spacing">
-		<h1> Past Pikups </h1>
-		<div class ="pikup_item">
+		<h1> My Pikups </h1>
+		<div class="pikup_item future">
 			<img class="pikup_logo" src="./img/starbucks_logo.png">
 			<div class="pikup_info">
+				<h3>Tim Hortons </h3>
 				<h4> TWO CAR FULLS OF PRODUCTS </h4>
 				<h5> September 21, 2014 </h5>
 				<h5> 145 University Avenue West </h5>
 			</div>
 			<div class="pikup_actions">
-				<img src="./img/check.png" >
-				<img src="./img/mail.png" >
+				<img src="./img/check.png" class="hover_hand book_pikup">
+				<img src="./img/mail.png" class="hover_hand email_pikup">
 			</div>
 		</div>
-		<div class ="pikup_item">
+		<div class ="pikup_item past">
 			<img class="pikup_logo" src="./img/starbucks_logo.png">
 			<div class="pikup_info">
+				<h3>Tim Hortons </h3>
 				<h4> TWO CAR FULLS OF PRODUCTS </h4>
 				<h5> September 21, 2014 </h5>
 				<h5> 145 University Avenue West </h5>
 			</div>
 			<div class="pikup_actions">
-				<img src="./img/check.png" >
-				<img src="./img/mail.png" >
+				<img src="./img/check.png" class="hover_hand book_pikup">
+				<img src="./img/mail.png" class="hover_hand email_pikup">
 			</div>
 		</div>
-		<div class ="pikup_item">
+		<div class ="pikup_item past">
 			<img class="pikup_logo" src="./img/starbucks_logo.png">
 			<div class="pikup_info">
+				<h3>Tim Hortons </h3>
 				<h4> TWO CAR FULLS OF PRODUCTS </h4>
 				<h5> September 21, 2014 </h5>
 				<h5> 145 University Avenue West </h5>
 			</div>
 			<div class="pikup_actions">
-				<img src="./img/check.png" >
-				<img src="./img/mail.png" >
+				<img src="./img/check.png" class="hover_hand book_pikup">
+				<img src="./img/mail.png" class="hover_hand email_pikup">
 			</div>
 		</div>
-		<div class ="pikup_item">
+		<div class ="pikup_item past">
 			<img class="pikup_logo" src="./img/starbucks_logo.png">
 			<div class="pikup_info">
 				<h4> TWO CAR FULLS OF PRODUCTS </h4>
@@ -120,8 +147,8 @@
 				<h5> 145 University Avenue West </h5>
 			</div>
 			<div class="pikup_actions">
-				<img src="./img/check.png" >
-				<img src="./img/mail.png" >
+				<img src="./img/check.png" class="hover_hand book_pikup">
+				<img src="./img/mail.png" class="hover_hand email_pikup">
 			</div>
 		</div>
 	</div>
@@ -139,4 +166,17 @@ document.getElementById("map-canvas").style.position = "fixed";
 
 });
 */
+
+$(".pikup_actions").on("click", ".email_pikup", function() {
+	//console.log( $('.pikup_actions').parent().find('input').length );
+	if ($('.pikup_actions').parent().find('textarea').length == 0) {
+		$(this).parent().parent().append('<textarea placeholder="Type your message here...."></textarea>');
+	} else {
+		$(this).parent().parent().find('textarea').toggle();
+	}
+});
+
+$(".pikup_actions").on("click", ".book_pikup", function() {
+	console.log( $(this).parent().parent().css('background-color' , '#ECF1EF') );
+});
 </script>
