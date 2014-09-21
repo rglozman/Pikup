@@ -57,6 +57,11 @@ $(function() {
     $("#loginButton").show();
   })
 
+  fetchCurrentPostings();
+  fetchClaimedPostings();
+});
+
+function fetchCurrentPostings() {
   // Get all current postings
   Parse.Cloud.run("currentPostings", {}, {
     success: function(result) {
@@ -80,7 +85,7 @@ $(function() {
         html += '</div>';
         html += '<div class="buttons">';
         html += '<div class="item">';
-        html += '<i class="fa fa-check"></i>';
+        html += '<i class="fa fa-check" onclick="claimPosting(\'' + result[index].id + '\')"></i>';
         html += '</div>';
         html += '<div class="item">';
         html += '<i class="fa fa-envelope"></i>';
@@ -128,16 +133,52 @@ $(function() {
 
     }
   })
+}
 
+function fetchClaimedPostings() {
   Parse.Cloud.run("claimedPostings", {}, {
     success: function(result) {
+      // Add the content.
+      var html = ""
 
+      for(var index = 0; index < result.length; index++) {
+        html += '<div class="item">';
+        html += '<div class="picture" style="background-image:url(' + result[index].get("business").get("photoUrl") + ');"></div>';
+        html += '<div class="info">';
+        html += '<div class="cell">';
+        html += '<div class="name">' + result[index].get("business").get("name") + '</div>';
+        html += '<div class="amount">' + result[index].get("amount") + '</div>';
+        html += '<div class="address">';
+        html += result[index].get("business").get("streetAddress");
+        html += '<br />';
+        html += result[index].get("business").get("city") + ', ' + result[index].get("business").get("state") + ' ' + result[index].get("business").get("zip");
+        html += '</div>';
+        html += '<div class="time"><i class="fa fa-clock-o"></i>' + moment(result[index].createdAt).fromNow() + '</div>';
+        html += '</div>';
+        html += '</div>';
+        html += '</div>';
+      }
+
+      $("#claimed-list").html(html);
     },
     error: function(error) {
 
     }
   });
-}) 
+}
+
+// Claim a posting
+function claimPosting(postingId) {
+  Parse.Cloud.run("claimPosting", {postId: postingId}, {
+    success: function(result) {
+      fetchClaimedPostings();
+      fetchCurrentPostings();
+    },
+    error: function(error) {
+      alert("Sorry, an error occured in claiming your posting. Please try again.");
+    }
+  })
+}
 
 // Get current position
 function getCurrentPosition() {
