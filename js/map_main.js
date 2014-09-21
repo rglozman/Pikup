@@ -156,6 +156,11 @@ function fetchClaimedPostings() {
         html += '<div class="time"><i class="fa fa-clock-o"></i>' + moment(result[index].createdAt).fromNow() + '</div>';
         html += '</div>';
         html += '</div>';
+        html += '<div class="buttons">';
+        html += '<div class="item">';
+        html += '<i class="fa fa-times" onclick="unclaimPosting(\'' + result[index].id + '\')"></i>';
+        html += '</div>';
+        html += '</div>';
         html += '</div>';
       }
 
