@@ -172,6 +172,17 @@ body, html {
 	cursor: pointer;	
 }
 
+.content .pikup-section .box .list > .item .message-container {
+	margin-top: 10px;
+}
+
+.content .pikup-section .box .list > .item .message-container textarea {
+	width: 100%;
+	border-radius: 3px;
+	border-color: #CCC;
+	resize: none;
+}
+
 .modal {
 	z-index: 1050 !important;
 	overflow: hidden !important;

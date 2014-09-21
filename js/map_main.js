@@ -69,7 +69,7 @@ function fetchCurrentPostings() {
       var html = ""
 
       for(var index = 0; index < result.length; index++) {
-        html += '<div class="item">';
+        html += '<div class="item" id="' + result[index].id + '">';
         html += '<div class="picture" style="background-image:url(' + result[index].get("business").get("photoUrl") + ');"></div>';
         html += '<div class="info">';
         html += '<div class="cell">';
@@ -88,8 +88,11 @@ function fetchCurrentPostings() {
         html += '<i class="fa fa-check" onclick="claimPosting(\'' + result[index].id + '\')"></i>';
         html += '</div>';
         html += '<div class="item">';
-        html += '<i class="fa fa-envelope"></i>';
+        html += '<i class="fa fa-envelope" onclick="messageBusiness(\'' + result[index].id + '\')"></i>';
         html += '</div>';
+        html += '</div>';
+        html += '<div class="message-container hide">';
+        html += '<textarea placeholder="Press enter to send a message"></textarea>';
         html += '</div>';
         html += '</div>';
       }
@@ -133,6 +136,10 @@ function fetchCurrentPostings() {
 
     }
   })
+}
+
+function messageBusiness(id) {
+  $("#" + id + " .message-container").toggleClass('hide');
 }
 
 function fetchClaimedPostings() {
