@@ -21,6 +21,8 @@ var closest = [];
 $(function() {
   if(Parse.User.current()) {
     $("#loginButton").hide();
+  } else {
+    $("#logoutButton").hide();
   }
 
   // Load map
