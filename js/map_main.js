@@ -85,10 +85,10 @@ function fetchCurrentPostings() {
         html += '</div>';
         html += '<div class="buttons">';
         html += '<div class="item">';
-        html += '<div class="add_pikup" onclick="claimPosting(\'' + result[index].id + '\')"></div>';
+        html += '<i class="fa fa-check" onclick="claimPosting(\'' + result[index].id + '\')"></i>';
         html += '</div>';
         html += '<div class="item">';
-        html += '<i class="contact"></i>';
+        html += '<i class="fa fa-envelope"></i>';
         html += '</div>';
         html += '</div>';
         html += '</div>';
