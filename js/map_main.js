@@ -11,37 +11,81 @@ var Message = Parse.Object.extend("Message");
 var Posting = Parse.Object.extend("Posting");
 var Shelter = Parse.Object.extend("Shelter");
 
-$(function() {
-  // Load postings from local businesses
-
-})
-
-
-// Map Code
-$(".pikup_actions").on("click", ".email_pikup", function() {
-  if ($(this).parent().parent().find('textarea').length == 0) {
-    $(this).parent().parent().append('<textarea placeholder="Type your message here...."></textarea>');
-  } else {
-    $(this).parent().parent().find('textarea').toggle();
-  }
-});
-
-$(".pikup_actions").on("click", ".book_pikup", function() {
-  console.log( $(this).parent().parent().css('background-color' , '#ECF1EF') );
-});
-
-var locations = [
-  [ "Tim Hortons","no","95 King Street South, Waterloo","<Polygon><outerBoundaryIs><LinearRing><coordinates>43.4630965,-80.52217417</coordinates></LinearRing></outerBoundaryIs></Polygon>","43.4630965,-80.52217417","http://maps.google.com/mapfiles/ms/icons/blue.png"],
-  [ "Tim Hortons","no","151 Columbia Street, Waterloo","<Polygon><outerBoundaryIs><LinearRing><coordinates>43.4770042,-80.544263216</coordinates></LinearRing></outerBoundaryIs></Polygon>","43.4770042,-80.544263216","http://maps.google.com/mapfiles/ms/icons/blue.png"],
-  [ "Starbucks","no","109 King Street North, Waterloo","<Polygon><outerBoundaryIs><LinearRing><coordinates>43.469249,-80.527782416</coordinates></LinearRing></outerBoundaryIs></Polygon>","43.469249,-80.527782416","http://maps.google.com/mapfiles/ms/icons/blue.png"],
-  [ "University of Waterloo","no","200 University Avenue West, Waterloo","<Polygon><outerBoundaryIs><LinearRing><coordinates>43.472285,-80.544858</coordinates></LinearRing></outerBoundaryIs></Polygon>","43.472285,-80.544858","http://maps.google.com/mapfiles/ms/icons/blue.png"]
-];
-
+// Global variables
 var geocoder = null;
 var map = null;
 var customerMarker = null;
 var gmarkers = [];
 var closest = [];
+
+$(function() {
+  // Load map
+  initialize();
+
+  // Get all current postings
+  Parse.Cloud.run("currentPostings", {}, {
+    success: function(result) {
+      var html = ""
+      for(var index = 0; index < result.length; index++) {
+        html += '<div class="item">';
+        html += '<div class="picture" style="background-image:url(' + result[index].get("business").get("photoUrl") + ');"></div>';
+        html += '<div class="info">';
+        html += '<div class="cell">';
+        html += '<div class="name">' + result[index].get("business").get("name") + '</div>';
+        html += '<div class="amount">' + result[index].get("amount") + '</div>';
+        html += '<div class="address">';
+        html += result[index].get("business").get("streetAddress");
+        html += '<br />';
+        html += result[index].get("business").get("city") + ', ' + result[index].get("business").get("state") + ' ' + result[index].get("business").get("zip");
+        html += '</div>';
+        html += '<div class="time"><i class="fa fa-clock-o"></i>2 hours ago</div>';
+        html += '</div>';
+        html += '</div>';
+        html += '<div class="buttons">';
+        html += '<div class="item">';
+        html += '<i class="fa fa-check"></i>';
+        html += '</div>';
+        html += '<div class="item">';
+        html += '<i class="fa fa-envelope"></i>';
+        html += '</div>';
+        html += '</div>';
+        html += '</div>';
+      }
+
+      $("#postings-list").html(html);
+    },
+    error: function(error) {
+
+    }
+  })
+}) 
+
+// Get current position
+function getCurrentPosition() {
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+      var infowindow = new google.maps.InfoWindow({
+        map: map,
+        position: pos,
+        content: 'Your Location!'
+      });
+
+      marker = new google.maps.Marker({         
+        position: pos,         
+        map: map,
+        icon: "http://www.google.com/intl/en_us/mapfiles/ms/micons/orange-dot.png"
+      });    
+
+      map.setCenter(pos);
+    }, function() {
+      handleNoGeolocation(true);
+    });
+  } else {
+    handleNoGeolocation(false);
+  }
+}
 
 // Initialize Map
 function initialize() {
@@ -58,64 +102,88 @@ function initialize() {
     scaleControl: true,
   });   
 
-  var infowindow = new google.maps.InfoWindow();      
-  var marker, i;      
-  var bounds = new google.maps.LatLngBounds();
+  // var infowindow = new google.maps.InfoWindow();      
+  // var marker, i;      
+  // var bounds = new google.maps.LatLngBounds();
 
-  for (i = 0; i < locations.length; i++) {         
-    var coordStr = locations[i][4];
-    var coords = coordStr.split(",");
-    var pt = new google.maps.LatLng(parseFloat(coords[0]),parseFloat(coords[1]));
-    bounds.extend(pt);
+  // for (i = 0; i < locations.length; i++) {         
+  //   var coordStr = locations[i][4];
+  //   var coords = coordStr.split(",");
+  //   var pt = new google.maps.LatLng(parseFloat(coords[0]),parseFloat(coords[1]));
+  //   bounds.extend(pt);
     
-    marker = new google.maps.Marker({         
-      position: pt,         
-      map: map,
-      icon: locations[i][5],
-      address: locations[i][2],
-      title: locations[i][0],
-      html: locations[i][0]+"<br>"+locations[i][2]
-    });
+  //   marker = new google.maps.Marker({         
+  //     position: pt,         
+  //     map: map,
+  //     icon: locations[i][5],
+  //     address: locations[i][2],
+  //     title: locations[i][0],
+  //     html: locations[i][0]+"<br>"+locations[i][2]
+  //   });
 
-    gmarkers.push(marker);
-    google.maps.event.addListener(marker, 'click', (function(marker, i) {         
+  //   gmarkers.push(marker);
+  //   google.maps.event.addListener(marker, 'click', (function(marker, i) {         
 
-      return function() 
-      {           infowindow.setContent(marker.html);
-        infowindow.open(map, marker);         
-      }       
-    })
-    (marker, i));     
+  //     return function() 
+  //     {           infowindow.setContent(marker.html);
+  //       infowindow.open(map, marker);         
+  //     }       
+  //   })
+  //   (marker, i));     
+  // }
+
+  // map.fitBounds(bounds);   
+}
+
+// Geolocation error
+function handleNoGeolocation(errorFlag) {
+  if (errorFlag) {
+    var content = 'Error: The Geolocation service failed.';
+  } else {
+    var content = 'Error: Your browser doesn\'t support geolocation.';
   }
 
-  map.fitBounds(bounds);   
+  console.log(content);
 }
 
+// Map Code
+// $(".pikup_actions").on("click", ".email_pikup", function() {
+//   if ($(this).parent().parent().find('textarea').length == 0) {
+//     $(this).parent().parent().append('<textarea placeholder="Type your message here...."></textarea>');
+//   } else {
+//     $(this).parent().parent().find('textarea').toggle();
+//   }
+// });
+
+// $(".pikup_actions").on("click", ".book_pikup", function() {
+//   console.log( $(this).parent().parent().css('background-color' , '#ECF1EF') );
+// });
+// 
 // Geocode the entered address
-function codeAddress() {
-  var address = document.getElementById('address').value;
-  geocoder.geocode( { 'address': address}, function(results, status) {
-    if(status == google.maps.GeocoderStatus.OK) {
-      map.setCenter(results[0].geometry.location);
+// function codeAddress() {
+//   var address = document.getElementById('address').value;
+//   geocoder.geocode( { 'address': address}, function(results, status) {
+//     if(status == google.maps.GeocoderStatus.OK) {
+//       map.setCenter(results[0].geometry.location);
       
-      if(customerMarker) 
-        customerMarker.setMap(null);
+//       if(customerMarker) 
+//         customerMarker.setMap(null);
       
-      customerMarker = new google.maps.Marker({
-        map: map,
-        position: results[0].geometry.location
-      });
+//       customerMarker = new google.maps.Marker({
+//         map: map,
+//         position: results[0].geometry.location
+//       });
     
-      closest = findClosestN(results[0].geometry.location,10);
-      closest = closest.splice(0,3);
+//       closest = findClosestN(results[0].geometry.location,10);
+//       closest = closest.splice(0,3);
 
-      calculateDistances(results[0].geometry.location, closest,3);
-    } else {
-      alert('Geocode was not successful for the following reason: ' + status);
-    }
-  });
-}
-
+//       calculateDistances(results[0].geometry.location, closest,3);
+//     } else {
+//       alert('Geocode was not successful for the following reason: ' + status);
+//     }
+//   });
+// }
+// 
 // Init everything
 // function init() {
 // 	var address = document.getElementById('address').value;
@@ -214,22 +282,5 @@ function codeAddress() {
 //     handleNoGeolocation(false);
 //   }
 // }
-
-// // Geolocation error
-// function handleNoGeolocation(errorFlag) {
-//   if (errorFlag) {
-//     var content = 'Error: The Geolocation service failed.';
-//   } else {
-//     var content = 'Error: Your browser doesn\'t support geolocation.';
-//   }
-
-//   var options = {
-//     map: map,
-//     position: new google.maps.LatLng(60, 105),
-//     content: content
-//   };
-//   var infowindow = new google.maps.InfoWindow(options);
-//   map.setCenter(options.position);
-// }
-
-google.maps.event.addDomListener(window, 'load', initialize);
+// 
+// google.maps.event.addDomListener(window, 'load', initialize);
