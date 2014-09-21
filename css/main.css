@@ -163,3 +163,16 @@ body, html {
 	line-height: 62.5px;
 	cursor: pointer;	
 }
+
+.modal{
+z-index: 1050 !important;
+overflow: hidden !important;
+background-color: aliceblue !important;
+outline: 0 !important;
+width: 25%;
+height: 45%;
+margin: 0;
+position: absolute;
+top: 25%;
+left: 40%;
+}
