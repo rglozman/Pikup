@@ -160,7 +160,7 @@ function fetchClaimedPostings() {
         html += '<br />';
         html += result[index].get("business").get("city") + ', ' + result[index].get("business").get("state") + ' ' + result[index].get("business").get("zip");
         html += '</div>';
-        html += '<div class="time"><i class="fa fa-clock-o"></i>' + moment(result[index].createdAt).fromNow() + '</div>';
+        html += '<div class="time"><i class="fa fa-clock-o"></i>' + moment(result[index].get('postedAt')).fromNow() + '</div>';
         html += '</div>';
         html += '</div>';
         html += '<div class="buttons">';

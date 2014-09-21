@@ -207,18 +207,3 @@ body, html {
 	box-shadow: none;
 }
 
-.add_pikup {
-width: 100px;
-
-background: url("/img/pikup.png") no-repeat;
-display:inline;
-
-}
-
-
-.contact {
-width: 100px;
-background: url("/img/mail.png") no-repeat;
-display:inline;
-
-}
