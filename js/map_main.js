@@ -206,7 +206,7 @@ function initialize() {
   map = new google.maps.Map(document.getElementById('map'), 
   {       
     zoom: 9,       
-    center: new google.maps.LatLng(52.6699927, -0.7274620),       
+    center: new google.maps.LatLng(43.464258, -80.520410),       
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     disableDefaultUI: true,
     scrollwheel: false,
