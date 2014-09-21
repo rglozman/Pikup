@@ -1,3 +1,16 @@
+$(".pikup_actions").on("click", ".email_pikup", function() {
+    //console.log( $('.pikup_actions').parent().find('input').length );
+    if ($(this).parent().parent().find('textarea').length == 0) {
+      $(this).parent().parent().append('<textarea placeholder="Type your message here...."></textarea>');
+    } else {
+      $(this).parent().parent().find('textarea').toggle();
+    }
+  });
+
+  $(".pikup_actions").on("click", ".book_pikup", function() {
+    console.log( $(this).parent().parent().css('background-color' , '#ECF1EF') );
+  });
+
 
 var locations = [
 [ "Tim Hortons","no","95 King Street South, Waterloo","<Polygon><outerBoundaryIs><LinearRing><coordinates>43.4630965,-80.52217417</coordinates></LinearRing></outerBoundaryIs></Polygon>","43.4630965,-80.52217417","http://maps.google.com/mapfiles/ms/icons/blue.png"],
@@ -8,8 +21,6 @@ var locations = [
 
 [ "University of Waterloo","no","200 University Avenue West, Waterloo","<Polygon><outerBoundaryIs><LinearRing><coordinates>43.472285,-80.544858</coordinates></LinearRing></outerBoundaryIs></Polygon>","43.472285,-80.544858","http://maps.google.com/mapfiles/ms/icons/blue.png"]
 ];
-
-alert(locations.length);
 
 var geocoder = null;
 var map = null;
@@ -29,7 +40,6 @@ function initialize() {
     navigationControl: false,
     mapTypeControl: false,
     scaleControl: true,
-    draggable: false
   });   
 
   var infowindow = new google.maps.InfoWindow();      

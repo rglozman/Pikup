@@ -3,77 +3,134 @@
 <head>
 	<meta charset="UTF-8"> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-	<title>PikUP</title>
+	<title>Pikup</title>
 
-		<!--CSS-->
+	<!--CSS-->
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="css/main.css" rel="stylesheet">
 
-		<!--JavaScript-->
+	<!--JavaScript-->
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVcoQ7KffZBwfEdDfUCn_PmXkPGgF-Q4Y"></script>
-	<script src="js/map.js"></script>
-
+	<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=false"></script>
+	<script src="js/map_main.js"></script>
 </head>
 
 <body>
+	<input hidden id="myLoc" value="200 university avenue west waterloo" />
 
-	<div id="map-canvas"></div>
-	<form role="form">
-		 <div class="form-group">
-    <label for="place">Title:</label>
-    <input class="form-control" id="place" placeholder="Title: ">
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      	<div class="container-fluid">
+        	<div class="navbar-header">
+          		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-6">
+        			<span class="sr-only">Toggle navigation</span>
+            		<span class="icon-bar"></span>
+            		<span class="icon-bar"></span>
+            		<span class="icon-bar"></span>
+          		</button>
+          		<a class="navbar-brand" href="#">Pikup</a>
+    		</div>
 
-  </div>
-  <div class="form-group">
-    <label for="address">Address:</label>
-    <input class="form-control" id="address" placeholder="Enter Address: ">
-  </div>
+        	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+          		<ul class="nav navbar-nav navbar-right">
+            		<li class=""><a>Login</a></li>
+            		<li class=""><a>Signup</a></li>
+          		</ul>
+    		</div><!-- /.navbar-collapse -->
+      	</div>
+    </nav>
 
-<button class="button" id="submitAddress">Submit</button>
+	<div class="map-container">
+    	<div id="map"></div>
+    </div>
 
+    <div class="content">
+	    <div class="row">
+	    	<div class="col-md-6 pikup-section">
+	    		<div class="box">
+		    		<div class="title">Pickups Available</div>
+		    		<div class="list">
+		    			<div class="item">
+		    				<div class="picture" style="background-image:url('./img/tim_hortons_logo.png');"></div>
+		    				<div class="info">
+		    					<div class="cell">
+			    					<div class="name">Tim Horton's</div>
+			    					<div class="amount">2 cars full of products</div>
+			    					<div class="address">
+			    						200 University Avenue West
+			    						<br />
+			    						Waterloo, ON N2L 3G5
+									</div>
+									<div class="time"><i class="fa fa-clock-o"></i>2 hours ago</div>
+								</div>
+		    				</div>
+		    				<div class="buttons">
+		    					<div class="item">
+		    						<i class="fa fa-check"></i>
+		    					</div>
+		    					<div class="item">
+		    						<i class="fa fa-envelope"></i>
+		    					</div>
+		    				</div>
+		    			</div>
+		    			<div class="item">
+		    				<div class="picture" style="background-image:url('./img/starbucks_logo.png');"></div>
+		    				<div class="info">
+		    					<div class="cell">
+			    					<div class="name">Starbucks</div>
+			    					<div class="amount">1 car full of bread and pastry</div>
+			    					<div class="address">
+			    						109 King Street North
+			    						<br />
+			    						Waterloo, ON N2L 3G5
+									</div>
+									<div class="time"><i class="fa fa-clock-o"></i>1 hour ago</div>
+								</div>
+		    				</div>
+		    				<div class="buttons">
+		    					<div class="item">
+		    						<i class="fa fa-check"></i>
+		    					</div>
+		    					<div class="item">
+		    						<i class="fa fa-envelope"></i>
+		    					</div>
+		    				</div>
+		    			</div>
+		    		</div>
+		    	</div>
+	    	</div>
+	    	<div class="col-md-6 pikup-section">
+	    		<div class="box">
+	    			<div class="title">My Pickups</div>
+	    		</div>
+	    	</div>
+	    </div>
+    </div>
+	
+	<!-- <div class="pikup-section">
+		<div id="info"></div>
+		<input id="address" type="text"></input>
+		<input type="button" value="Search" onclick="codeAddress();"></input>
+	
+		<h1>Pikups</h1>
+		
+		<div class="pikup-item">
+			<a>
+				<img class="pikup-logo" src="./img/tim_hortons_logo.png">
+				<div class="pikup-info">
+					<h3>Tim Hortons </h3>
+					<h4> TWO CAR FULLS OF PRODUCTS </h4>
+					<h5> September 21, 2014 </h5>
+					<h5> 200 University Avenue West </h5>
+				</div>
+			</a>
 
-	<script type="text/javascript">
-
-
-
-  $(function() {
-  	$("#submitAddress").click(function(event) {
-  		event.preventDefault();
-  		var address = $('#address').val();
-
-		var geocoder= new google.maps.Geocoder();
-
-		geocoder.geocode( { 'address': address}, function(results, status) {
-		if (status == google.maps.GeocoderStatus.OK) {
-   			 var lat = results[0].geometry.location.k;
-    		 var lon = results[0].geometry.location.B;
-    		 var place = document.getElementById("place").value;
-   			 loc_plot(place, lat, lon);
-   			 } 
-		}); 
-  	})
-  })
- 
-</script>
-
-</form>
-	<div id="pikup_wrapper" class="spacing">
-		<h1> Pikups </h1>
-		<div class ="pikup_item">
-			<img class="pikup_logo" src="./img/starbucks_logo.png">
-			<h4> TWO CAR FULLS OF PRODUCTS </h4>
-			<h5> September 21, 2014 </h5>
-			<h5> 145 University Avenue West </h5>
-			<img src="./img/check.png" >
-			<img src="./img/mail.png" >
+			<div class="pikup-actions">
+				<img src="./img/check.png" class="hover-hand book-pikup">
+				<img src="./img/mail.png" class="hover-hand email-pikup">
+			</div>
 		</div>
-	</div>
-
-
+	</div> -->
 </body>
-
 </html>
-

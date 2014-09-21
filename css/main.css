@@ -1,90 +1,165 @@
-html {
-margin:0;
-padding:0;
+@font-face {
+    font-family: 'Lato';
+    font-weight: 300;
+    src: url('./fonts/lato/lato-light.eot?') format('eot'), url('./fonts/lato/lato-light.woff') format('woff'), url('./fonts/lato/lato-light.ttf') format('truetype');
 }
 
-.spacing {
-margin: 0 auto;
-width: 80%;
+@font-face {
+    font-family: 'Lato';
+    font-weight: 400;
+    src: url('./fonts/lato/lato-regular.eot?') format('eot'), url('./fonts/lato/lato-regular.woff') format('woff'), url('./fonts/lato/lato-regular.ttf') format('truetype');
 }
 
-.hover_hand{
-cursor:pointer;
+@font-face {
+    font-family: 'Lato';
+    font-weight: 700;
+    src: url('./fonts/lato/lato-bold.eot?') format('eot'), url('./fonts/lato/lato-bold.woff') format('woff'), url('./fonts/lato/lato-bold.ttf') format('truetype');
 }
 
-.pikup_wrapper h1 {
-margin-bottom: 10px;
-font-size: 40px;
+* {
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
 }
 
-.pikup_item {
-display:table;
-
-width:100%;
-margin-bottom:10px;
+body, html {
+	padding: 0;
+	margin: 0;
+	background: #F6F6F6;
 }
 
-.pikup_info {
-display:inline-block;
-width:60%;
-margin-left:5%;
+.navbar-default {
+	background: #FFF;
+	border: none;
 }
 
-.pikup_item .pikup_logo {
-max-width:200px;
-width:20%;
-border-radius: 100px;
-float:left;
+.map-container {
+	width: 100%;
+	position: fixed;
+	top: 50px;
+	left: 0;
+	right: 0;
+	z-index: 100;
 }
 
-.pikup_actions {
-float:right;
-max-width: 64px;
-width:10%;
-height:100%;
+.map-container #map {
+	height: 100%;
+	height: 250px;
+	width: 100%;
 }
 
-.pikup_actions img {
-width:100%;
-vertical-align: 0;
+.content {
+	padding-top: 300px;
+	max-width: 900px;
+	width: 100%;
+	margin: 30px auto;
+	margin-bottom: 0;
 }
 
-.pikup_add {
-height:300px;
-width:70%;
-margin:auto;
-padding: auto;
+.content .row {
+	margin: 0 20px;
 }
 
-.pikup_item textarea{
-display:block;
-clear:both;
-width: 60%;
-margin: 0 auto;
+.content .row .col-md-6 {
+	margin-bottom: 30px;
 }
 
-.buttons {
-float: left;
-
+.content .pikup-section .box {
+	border-radius: 4px;
+	overflow: hidden;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+	background: #FFF;
 }
 
-.buttons img{
-width: 100px;
+.content .pikup-section .box .title {
+	font-size: 25px;
+	line-height: 100%;
+	padding: 20px;
+	font-weight: 400;
+	border-bottom: 1px solid #F1F0EE;
 }
 
-.past {
-background-color:#FEE0C6;
+.content .pikup-section .box .list {
 }
 
-.future {
-background-color: #ECF1EF;
+.content .pikup-section .box .list > .item {
+	position: relative;
+	min-height: 125px;
+	border-bottom: 1px solid #F1F0EE;
+	padding: 20px;
 }
 
-#map { 
-height: 300px;
-width: 100%;
-position: fixed;
-overflow: hidden;
--webkit-transform: translateZ(0px);
-background-color: rgb(229, 227, 223);
+.content .pikup-section .box .list > .item:last-child {
+	border-bottom: 0;
+}
+
+.content .pikup-section .box .list > .item .picture {
+	width: 125px;
+	height: 125px;
+	border-radius: 50%;
+	overflow: hidden;
+	background-size: 100% 100%;
+	background-position: center center;
+	background-repeat: no-repeat;
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	bottom: 20px;
+}
+
+.content .pikup-section .box .list > .item .info {
+	padding-left: 140px;
+	display: table;
+	height: 125px;
+	padding-right: 50px;
+	width: 100%;
+}
+
+.content .pikup-section .box .list > .item .info .cell {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.content .pikup-section .box .list > .item .info .cell .name {
+	font-weight: 400;
+	font-size: 20px;
+	line-height: 100%;
+	margin-bottom: 3px;
+}
+
+.content .pikup-section .box .list > .item .info .cell .amount {
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 100%;
+	margin-bottom: 5px;
+}
+
+.content .pikup-section .box .list > .item .info .cell .address {
+	font-weight: 300;
+	font-size: 14px;
+	line-height: 100%;
+	margin-bottom: 5px;
+}
+
+.content .pikup-section .box .list > .item .info .cell .time {
+	font-weight: 300;
+	font-size: 11px;
+	font-weight: 400;
+	line-height: 100%;
+}
+
+.content .pikup-section .box .list > .item .info .cell .time i {
+	margin-right: 5px;
+}
+
+.content .pikup-section .box .list > .item .buttons {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	bottom: 20px;
+}
+
+.content .pikup-section .box .list > .item .buttons > .item {
+	font-size: 40px;
+	line-height: 62.5px;
+	cursor: pointer;	
 }
