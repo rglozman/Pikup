@@ -191,11 +191,15 @@ body, html {
 .add_pikup {
 width: 100px;
 
-background-image: url("/img/pikup.png");
+background: url("/img/pikup.png") no-repeat;
+display:inline;
+
 }
+
 
 .contact {
 width: 100px;
-background-image: url("/img/mail.png");
+background: url("/img/mail.png") no-repeat;
+display:inline;
 
 }
