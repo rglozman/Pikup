@@ -19,10 +19,41 @@ var gmarkers = [];
 var closest = [];
 
 $(function() {
+  if(Parse.User.current()) {
+    $("#loginButton").hide();
+  }
+
   // Load map
   initialize();
 
+  // Get current location
   getCurrentPosition();
+
+  // Form submit
+  $("#login_form").submit(function(event) {
+    event.preventDefault();
+    var email = $("#login_form #email").val();
+    var password = $("#login_form #password").val();
+
+    Parse.User.logIn(email, password, {
+      success: function() {
+        $("#myModal").modal('hide');
+        $("#loginButton").hide();
+        $("#logoutButton").show();
+      },
+      error: function(error) {
+        alert("Invalid credentials. Please try again.");
+      }
+    })
+  })
+
+  // Logout user
+  $("#logoutButton a").click(function(event) {
+    event.preventDefault();
+    Parse.User.logOut();
+    $("#logoutButton").hide();
+    $("#loginButton").show();
+  })
 
   // Get all current postings
   Parse.Cloud.run("currentPostings", {}, {
@@ -95,6 +126,15 @@ $(function() {
 
     }
   })
+
+  Parse.Cloud.run("claimedPostings", {}, {
+    success: function(result) {
+
+    },
+    error: function(error) {
+
+    }
+  });
 }) 
 
 // Get current position
