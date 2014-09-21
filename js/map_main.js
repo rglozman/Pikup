@@ -25,7 +25,9 @@ $(function() {
   // Get all current postings
   Parse.Cloud.run("currentPostings", {}, {
     success: function(result) {
+      // Add the content.
       var html = ""
+
       for(var index = 0; index < result.length; index++) {
         html += '<div class="item">';
         html += '<div class="picture" style="background-image:url(' + result[index].get("business").get("photoUrl") + ');"></div>';
@@ -53,6 +55,38 @@ $(function() {
       }
 
       $("#postings-list").html(html);
+
+      // Add markers
+      var infowindow = new google.maps.InfoWindow();      
+      var marker;      
+      var bounds = new google.maps.LatLngBounds();
+
+      for (var index = 0; index < result.length; index++) {         
+        var coordStr = result[index].get("business").get("latLng");
+        var pt = new google.maps.LatLng(parseFloat(coordStr.latitude),parseFloat(coordStr.longitude));
+        bounds.extend(pt);
+        
+        marker = new google.maps.Marker({         
+          position: pt,         
+          map: map,
+          icon: "http://maps.google.com/mapfiles/ms/icons/blue.png",
+          title: result[index].get('business').get('name'),
+          html: result[index].get('business').get('streetAddress') + ', ' + result[index].get('business').get('city') + ', ' + result[index].get('business').get('state') + ' ' + result[index].get('business').get('zip')
+        });
+
+        gmarkers.push(marker);
+        google.maps.event.addListener(marker, 'click', (function(marker, index) {         
+
+          return function() 
+          {           infowindow.setContent(marker.html);
+            infowindow.open(map, marker);         
+          }       
+        })
+        
+        (marker, index));     
+      }
+
+      map.fitBounds(bounds); 
     },
     error: function(error) {
 
@@ -100,39 +134,7 @@ function initialize() {
     navigationControl: false,
     mapTypeControl: false,
     scaleControl: true,
-  });   
-
-  // var infowindow = new google.maps.InfoWindow();      
-  // var marker, i;      
-  // var bounds = new google.maps.LatLngBounds();
-
-  // for (i = 0; i < locations.length; i++) {         
-  //   var coordStr = locations[i][4];
-  //   var coords = coordStr.split(",");
-  //   var pt = new google.maps.LatLng(parseFloat(coords[0]),parseFloat(coords[1]));
-  //   bounds.extend(pt);
-    
-  //   marker = new google.maps.Marker({         
-  //     position: pt,         
-  //     map: map,
-  //     icon: locations[i][5],
-  //     address: locations[i][2],
-  //     title: locations[i][0],
-  //     html: locations[i][0]+"<br>"+locations[i][2]
-  //   });
-
-  //   gmarkers.push(marker);
-  //   google.maps.event.addListener(marker, 'click', (function(marker, i) {         
-
-  //     return function() 
-  //     {           infowindow.setContent(marker.html);
-  //       infowindow.open(map, marker);         
-  //     }       
-  //   })
-  //   (marker, i));     
-  // }
-
-  // map.fitBounds(bounds);   
+  });  
 }
 
 // Geolocation error
