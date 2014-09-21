@@ -185,6 +185,19 @@ function claimPosting(postingId) {
   })
 }
 
+// Claim a posting
+function unclaimPosting(postingId) {
+  Parse.Cloud.run("unclaimPosting", {postId: postingId}, {
+    success: function(result) {
+      fetchClaimedPostings();
+      fetchCurrentPostings();
+    },
+    error: function(error) {
+      alert("Sorry, an error occured in unclaiming your posting. Please try again.");
+    }
+  })
+}
+
 // Get current position
 function getCurrentPosition() {
   if(navigator.geolocation) {
