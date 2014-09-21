@@ -22,6 +22,8 @@ $(function() {
   // Load map
   initialize();
 
+  getCurrentPosition();
+
   // Get all current postings
   Parse.Cloud.run("currentPostings", {}, {
     success: function(result) {
@@ -71,7 +73,7 @@ $(function() {
           map: map,
           icon: "http://maps.google.com/mapfiles/ms/icons/blue.png",
           title: result[index].get('business').get('name'),
-          html: result[index].get('business').get('name') + '<br /><br />' + result[index].get('business').get('streetAddress') + '<br />' + result[index].get('business').get('city') + ', ' + result[index].get('business').get('state') + ' ' + result[index].get('business').get('zip')
+          html: result[index].get('business').get('name') + '<br/>' + result[index].get('amount') + '<br /><br />' + result[index].get('business').get('streetAddress') + '<br />' + result[index].get('business').get('city') + ', ' + result[index].get('business').get('state') + ' ' + result[index].get('business').get('zip')
         });
 
         gmarkers.push(marker);
@@ -100,13 +102,6 @@ function getCurrentPosition() {
   if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
-      var infowindow = new google.maps.InfoWindow({
-        map: map,
-        position: pos,
-        content: 'Your Location!'
-      });
-
       marker = new google.maps.Marker({         
         position: pos,         
         map: map,
@@ -148,142 +143,3 @@ function handleNoGeolocation(errorFlag) {
 
   console.log(content);
 }
-
-Map Code
-$(".pikup_actions").on("click", ".email_pikup", function() {
-  if ($(this).parent().parent().find('textarea').length == 0) {
-    $(this).parent().parent().append('<textarea placeholder="Type your message here...."></textarea>');
-  } else {
-    $(this).parent().parent().find('textarea').toggle();
-  }
-});
-
-$(".pikup_actions").on("click", ".book_pikup", function() {
-  console.log( $(this).parent().parent().css('background-color' , '#ECF1EF') );
-});
-
-Geocode the entered address
-function codeAddress() {
-  var address = document.getElementById('address').value;
-  geocoder.geocode( { 'address': address}, function(results, status) {
-    if(status == google.maps.GeocoderStatus.OK) {
-      map.setCenter(results[0].geometry.location);
-      
-      if(customerMarker) 
-        customerMarker.setMap(null);
-      
-      customerMarker = new google.maps.Marker({
-        map: map,
-        position: results[0].geometry.location
-      });
-    
-      closest = findClosestN(results[0].geometry.location,10);
-      closest = closest.splice(0,3);
-
-      calculateDistances(results[0].geometry.location, closest,3);
-    } else {
-      alert('Geocode was not successful for the following reason: ' + status);
-    }
-  });
-}
-
-Init everything
-function init() {
-	var address = document.getElementById('address').value;
-
-  geocoder.geocode( { 'address': address}, function(results, status) {
-    if(status == google.maps.GeocoderStatus.OK) {
-      map.setCenter(results[0].geometry.location);
-      
-      if(customerMarker)
-        customerMarker.setMap(null);
-      
-      customerMarker = new google.maps.Marker({
-        map: map,
-        position: results[0].geometry.location
-      });
-      
-      closest = findClosestN(results[0].geometry.location,10);
-      closest = closest.splice(0,locations.length);
-      calculateDistances(results[0].geometry.location, closest, locations.length);
-    } else {
-      alert('Geocode was not successful for the following reason: ' + status);
-    }
-  });
-}
-
-// Find closest N postings
-function findClosestN(pt,numberOfResults) {
- var closest = [];
-   for (var i=0; i<gmarkers.length;i++) {
-     gmarkers[i].distance = google.maps.geometry.spherical.computeDistanceBetween(pt,gmarkers[i].getPosition());
-     gmarkers[i].setMap(null);
-     closest.push(gmarkers[i]);
-   }
-   closest.sort(sortByDist);
-   return closest;
- }
-
- function sortByDist(a,b) {
-   return (a.distance- b.distance)
- }
-
- function calculateDistances(pt,closest,numberOfResults) {
-  var service = new google.maps.DistanceMatrixService();
-  var request =    {
-    origins: [pt],
-    destinations: [],
-    travelMode: google.maps.TravelMode.DRIVING,
-    unitSystem: google.maps.UnitSystem.METRIC,
-    avoidHighways: false,
-    avoidTolls: false
-  };
-  for (var i=0; i<closest.length; i++) request.destinations.push(closest[i].getPosition());
-    service.getDistanceMatrix(request, function (response, status) {
-      if (status != google.maps.DistanceMatrixStatus.OK) {
-        alert('Error was: ' + status);
-      } else {
-        var origins = response.originAddresses;
-        var destinations = response.destinationAddresses;
-        var outputDiv = $(document).find(".pikup_info");
-
-        var results = response.rows[0].elements;
-        for (var i = 0; i < numberOfResults; i++) {
-		console.log(numberOfResults);
-          closest[i].setMap(map);
-          $( $(outputDiv[i]).find("h5")[2]).text(  results[i].distance.text + ' appoximately '
-          + results[i].duration.text );
-        }
-      }
-    });
-}
-
-function get_location() {
-
-  if(navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      var pos = new google.maps.LatLng(position.coords.latitude,
-       position.coords.longitude);
-
-      var infowindow = new google.maps.InfoWindow({
-        map: map,
-        position: pos,
-        content: 'Your Location!'
-      });
-
-      marker = new google.maps.Marker({         
-        position: pos,         
-        map: map,
-        icon: "http://www.google.com/intl/en_us/mapfiles/ms/micons/orange-dot.png"
-      });    
-
-      map.setCenter(pos);
-    }, function() {
-      handleNoGeolocation(true);
-    });
-  } else {
-    handleNoGeolocation(false);
-  }
-}
-
-google.maps.event.addDomListener(window, 'load', initialize);
