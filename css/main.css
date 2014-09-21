@@ -187,3 +187,15 @@ body, html {
 	width: 100%;
 	box-shadow: none;
 }
+
+.add_pikup {
+width: 100px;
+
+background-image: url("/img/pikup.png");
+}
+
+.contact {
+width: 100px;
+background-image: url("/img/mail.png");
+
+}
