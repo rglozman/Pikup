@@ -71,18 +71,19 @@ $(function() {
           map: map,
           icon: "http://maps.google.com/mapfiles/ms/icons/blue.png",
           title: result[index].get('business').get('name'),
-          html: result[index].get('business').get('streetAddress') + ', ' + result[index].get('business').get('city') + ', ' + result[index].get('business').get('state') + ' ' + result[index].get('business').get('zip')
+          html: result[index].get('business').get('name') + '<br /><br />' + result[index].get('business').get('streetAddress') + '<br />' + result[index].get('business').get('city') + ', ' + result[index].get('business').get('state') + ' ' + result[index].get('business').get('zip')
         });
 
         gmarkers.push(marker);
         google.maps.event.addListener(marker, 'click', (function(marker, index) {         
 
           return function() 
-          {           infowindow.setContent(marker.html);
+          {           
+            infowindow.setContent(marker.html);
             infowindow.open(map, marker);         
           }       
         })
-        
+
         (marker, index));     
       }
 
